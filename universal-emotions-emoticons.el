@@ -40,8 +40,8 @@
 
 ;; Usage:
 ;;
-;; Select the emotion(s) then click "Add..." to add them to
-;; the kill-ring, optionally including their description(s).
+;; Select the emotion(s) to add them to the kill-ring, optionally including
+;; their description(s).
 ;;
 ;; Hit TAB to go forward, SHIFT-TAB to go backward, and RETURN to press a button.
 
@@ -107,6 +107,48 @@
                       "\n"))))
     (list 'widget-insert spec)))
 
+(defun universal-emotions-emoticons--make-value ()
+  (if (or universal-emotions-emoticons--joy
+         universal-emotions-emoticons--surprise
+         universal-emotions-emoticons--sadness
+         universal-emotions-emoticons--anger
+         universal-emotions-emoticons--disgust
+         universal-emotions-emoticons--fear)
+      (progn
+        (let* ((candidates
+                (list
+                 (when universal-emotions-emoticons--joy
+                   universal-emotions-emoticons--joy-char)
+                 (when (and universal-emotions-emoticons--joy
+                          universal-emotions-emoticons--include-description)
+                   (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--joy-desc))
+                 (when universal-emotions-emoticons--surprise
+                   universal-emotions-emoticons--surprise-char)
+                 (when (and universal-emotions-emoticons--surprise
+                          universal-emotions-emoticons--include-description)
+                   (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--surprise-desc))
+                 (when universal-emotions-emoticons--sadness universal-emotions-emoticons--sadness-char)
+                 (when (and universal-emotions-emoticons--sadness
+                          universal-emotions-emoticons--include-description)
+                   (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--sadness-desc))
+                 (when universal-emotions-emoticons--anger universal-emotions-emoticons--anger-char)
+                 (when (and universal-emotions-emoticons--anger
+                          universal-emotions-emoticons--include-description)
+                   (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--anger-desc))
+                 (when universal-emotions-emoticons--disgust universal-emotions-emoticons--disgust-char)
+                 (when (and universal-emotions-emoticons--disgust
+                          universal-emotions-emoticons--include-description)
+                   (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--disgust-desc))
+                 (when universal-emotions-emoticons--fear universal-emotions-emoticons--fear-char)
+                 (when (and universal-emotions-emoticons--fear
+                          universal-emotions-emoticons--include-description)
+                   (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--fear-desc))))
+               (selected (seq-filter 'stringp candidates))
+               (value (string-join selected)))
+          (kill-new value)
+          (message (format "Added To Kill-Ring: %s" value))))
+    (progn
+      (message "Nothing added to the kill-ring: no emotions selected. "))))
 (defun universal-emotions-emoticons ()
   "Insert emoticons for the six universal expressions."
   (interactive)
@@ -150,7 +192,7 @@
   (widget-insert "\n\n")
   (widget-insert "Use these Unicode characters to precisely communicate your emotion(s).")
   (widget-insert "\n\n")
-  (widget-insert "Select the emotion(s) then click \"Add...\" to add them to\n")
+  (widget-insert "Select the emotion(s) to add them to\n")
   (widget-insert "the kill-ring, optionally including their description(s).\n\n")
   (widget-insert "Hit TAB to go forward, SHIFT-TAB to go backward, and RETURN to press a button.")
   (widget-insert "\n\n")
@@ -162,7 +204,8 @@
                           universal-emotions-emoticons--joy))
                    (message (format "%s: %s"
                                     universal-emotions-emoticons--joy-desc
-                                    universal-emotions-emoticons--joy)))
+                                    universal-emotions-emoticons--joy))
+                   (universal-emotions-emoticons--make-value))
                  nil)
   (universal-emotions-emoticons--make-checkbox-description
    universal-emotions-emoticons--joy-char
@@ -175,7 +218,8 @@
                           universal-emotions-emoticons--surprise))
                    (message (format "%s: %s"
                                     universal-emotions-emoticons--surprise-desc
-                                    universal-emotions-emoticons--surprise)))
+                                    universal-emotions-emoticons--surprise))
+                   (universal-emotions-emoticons--make-value))
                  nil)
   (universal-emotions-emoticons--make-checkbox-description
    universal-emotions-emoticons--surprise-char
@@ -188,7 +232,8 @@
                           universal-emotions-emoticons--sadness))
                    (message (format "%s: %s"
                                     universal-emotions-emoticons--sadness-desc
-                                    universal-emotions-emoticons--sadness)))
+                                    universal-emotions-emoticons--sadness))
+                   (universal-emotions-emoticons--make-value))
                  nil)
   (universal-emotions-emoticons--make-checkbox-description
    universal-emotions-emoticons--sadness-char
@@ -201,7 +246,8 @@
                           universal-emotions-emoticons--anger))
                    (message (format "%s: %s"
                                     universal-emotions-emoticons--anger-desc
-                                    universal-emotions-emoticons--anger)))
+                                    universal-emotions-emoticons--anger))
+                   (universal-emotions-emoticons--make-value))
                  nil)
   (universal-emotions-emoticons--make-checkbox-description
    universal-emotions-emoticons--anger-char
@@ -214,7 +260,8 @@
                           universal-emotions-emoticons--disgust))
                    (message (format "%s: %s"
                                     universal-emotions-emoticons--disgust-desc
-                                    universal-emotions-emoticons--disgust)))
+                                    universal-emotions-emoticons--disgust))
+                   (universal-emotions-emoticons--make-value))
                  nil)
   (universal-emotions-emoticons--make-checkbox-description
    universal-emotions-emoticons--disgust-char
@@ -227,7 +274,8 @@
                           universal-emotions-emoticons--fear))
                    (message (format "%s: %s"
                                     universal-emotions-emoticons--fear-desc
-                                    universal-emotions-emoticons--fear)))
+                                    universal-emotions-emoticons--fear))
+                   (universal-emotions-emoticons--make-value))
                  nil)
   (universal-emotions-emoticons--make-checkbox-description
    universal-emotions-emoticons--fear-char
@@ -240,57 +288,11 @@
                  (lambda (widget &rest ignore)
                    (setq universal-emotions-emoticons--include-description
                          (equal (widget-value widget) "Yes"))
-                   (message (format "Include description(s)? %s" universal-emotions-emoticons--include-description)))
+                   (message (format "Include description(s)? %s"
+                                    universal-emotions-emoticons--include-description))
+                   (universal-emotions-emoticons--make-value))
                  '(item "No")
                  '(item "Yes"))
-  (widget-insert "\n")
-  (widget-create
-   'push-button
-   :notify
-   (lambda (&rest ignore)
-     (if (or universal-emotions-emoticons--joy
-            universal-emotions-emoticons--surprise
-            universal-emotions-emoticons--sadness
-            universal-emotions-emoticons--anger
-            universal-emotions-emoticons--disgust
-            universal-emotions-emoticons--fear)
-         (progn
-           (let* ((candidates
-                   (list
-                    (when universal-emotions-emoticons--joy
-                      universal-emotions-emoticons--joy-char)
-                    (when (and universal-emotions-emoticons--joy
-                             universal-emotions-emoticons--include-description)
-                      (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--joy-desc))
-                    (when universal-emotions-emoticons--surprise
-                      universal-emotions-emoticons--surprise-char)
-                    (when (and universal-emotions-emoticons--surprise
-                             universal-emotions-emoticons--include-description)
-                      (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--surprise-desc))
-                    (when universal-emotions-emoticons--sadness universal-emotions-emoticons--sadness-char)
-                    (when (and universal-emotions-emoticons--sadness
-                             universal-emotions-emoticons--include-description)
-                      (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--sadness-desc))
-                    (when universal-emotions-emoticons--anger universal-emotions-emoticons--anger-char)
-                    (when (and universal-emotions-emoticons--anger
-                             universal-emotions-emoticons--include-description)
-                      (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--anger-desc))
-                    (when universal-emotions-emoticons--disgust universal-emotions-emoticons--disgust-char)
-                    (when (and universal-emotions-emoticons--disgust
-                             universal-emotions-emoticons--include-description)
-                      (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--disgust-desc))
-                    (when universal-emotions-emoticons--fear universal-emotions-emoticons--fear-char)
-                    (when (and universal-emotions-emoticons--fear
-                             universal-emotions-emoticons--include-description)
-                      (universal-emotions-emoticons--wrap-description universal-emotions-emoticons--fear-desc))))
-                  (selected (seq-filter 'stringp candidates))
-                  (value (string-join selected)))
-             (kill-new value)
-             (message (format "Added To Kill-Ring: %s" value))))
-       (progn
-         (message "Nothing added to the kill-ring: no emotions selected. "))))
-   "Add Emoticons To Kill-Ring")
-  (widget-insert "\n")
   (widget-insert "\n")
   (widget-create 'push-button
                  :notify

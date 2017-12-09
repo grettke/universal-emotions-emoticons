@@ -20,8 +20,8 @@ Use these Unicode characters to precisely communicate your emotion(s).
 
 ## Usage
 
-Select the emotion(s) then click "Add..." to add them to
-the kill-ring, optionally including their description(s).
+Select the emotion(s) to add them to the kill-ring, optionally including
+their description(s).
 
 Hit TAB to go forward, SHIFT-TAB to go backward, and RETURN to press a button.
 
