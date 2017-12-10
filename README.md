@@ -23,7 +23,8 @@ Use these Unicode characters to precisely communicate your emotion(s).
 Select the emotion(s) to add them to the kill-ring, optionally including
 their description(s).
 
-Hit TAB to go forward, SHIFT-TAB to go backward, and RETURN to press a button.
+Hit n to go forward, p to go backward, RETURN to select a field,
+and q to quit.
 
 ## Installation
 

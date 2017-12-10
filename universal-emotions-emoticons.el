@@ -43,7 +43,8 @@
 ;; Select the emotion(s) to add them to the kill-ring, optionally including
 ;; their description(s).
 ;;
-;; Hit TAB to go forward, SHIFT-TAB to go backward, and RETURN to press a button.
+;; Hit n to go forward, p to go backward, RETURN to select a field,
+;; and q to quit.
 
 ;; Installation:
 ;;
@@ -192,9 +193,10 @@
   (widget-insert "\n\n")
   (widget-insert "Use these Unicode characters to precisely communicate your emotion(s).")
   (widget-insert "\n\n")
-  (widget-insert "Select the emotion(s) to add them to\n")
-  (widget-insert "the kill-ring, optionally including their description(s).\n\n")
-  (widget-insert "Hit TAB to go forward, SHIFT-TAB to go backward, and RETURN to press a button.")
+  (widget-insert "Select the emotion(s) to add them to the kill-ring, \n")
+  (widget-insert "optionally including their description(s).\n\n")
+  (widget-insert "Hit n to go forward, p to go backward, RETURN to select a field,\n")
+  (widget-insert "and q to quit.")
   (widget-insert "\n\n")
   (widget-create 'checkbox
                  :notify
@@ -293,14 +295,11 @@
                    (universal-emotions-emoticons--make-value))
                  '(item "No")
                  '(item "Yes"))
-  (widget-insert "\n")
-  (widget-create 'push-button
-                 :notify
-                 (lambda (&rest ignore)
-                   (kill-this-buffer))
-                 "Kill This Buffer")
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map widget-keymap)
+    (define-key map "n" 'widget-forward)
+    (define-key map "p" 'widget-backward)
+    (define-key map "q" 'kill-this-buffer)
     (use-local-map map))
   (widget-setup)
   (progn
