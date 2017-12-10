@@ -151,7 +151,7 @@
           (kill-new value)
           (message (format "Added To Kill-Ring: %s" value))))
     (progn
-      (message "Nothing added to the kill-ring: no emotions selected. "))))
+      (message "Nothing added to the kill-ring: no emotions selected."))))
 (defun universal-emotions-emoticons ()
   "Insert emoticons for the six universal expressions."
   (interactive)
