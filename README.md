@@ -7,16 +7,18 @@
 ## Introduction
 
 It is difficult to communicate emotions using words. There are too many.
-They mean different things to different people. Expressions, however,
+They mean different things to different people. Facial expressions, however,
 are universal.
 
 "Psychological research has classified six facial expressions which
 correspond to distinct universal emotions: disgust, sadness, happiness,
 fear, anger, surprise [Black,Yacoob,95]. [Source](https://people.ece.cornell.edu/land/OldStudentProjects/cs490-95to96/HJKIM/emotions.html)
+They are referred to as the [Ekman Expressions](https://www.paulekman.com/universal-facial-expressions/).
 
-They are also referred to as the [Ekman Expressions](https://www.paulekman.com/universal-facial-expressions/).
+All human emotions can be expressed through the combination of
+these six emotions.
 
-Use these Unicode characters to precisely communicate your emotion(s).
+Use them to precisely communicate yours.
 
 ## Usage
 

@@ -27,16 +27,18 @@
 ;; Introduction:
 ;;
 ;; It is difficult to communicate emotions using words. There are too many.
-;; They mean different things to different people. Expressions, however,
+;; They mean different things to different people. Facial expressions, however,
 ;; are universal.
 ;;
 ;; "Psychological research has classified six facial expressions which
 ;; correspond to distinct universal emotions: disgust, sadness, happiness,
 ;; fear, anger, surprise [Black,Yacoob,95]. [Source](https://people.ece.cornell.edu/land/OldStudentProjects/cs490-95to96/HJKIM/emotions.html)
+;; They are referred to as the [Ekman Expressions](https://www.paulekman.com/universal-facial-expressions/).
 ;;
-;; They are also referred to as the [Ekman Expressions](https://www.paulekman.com/universal-facial-expressions/).
+;; All human emotions can be expressed through the combination of
+;; these six emotions.
 ;;
-;; Use these Unicode characters to precisely communicate your emotion(s).
+;; Use them to precisely communicate yours.
 
 ;; Usage:
 ;;
@@ -168,7 +170,7 @@
   (widget-insert
    "It is difficult to communicate emotions using words. There are too many.\n")
   (widget-insert
-   "They mean different things to different people. Expressions, however,\n")
+   "They mean different things to different people. Facial expressions, however,\n")
   (widget-insert
    "are universal.")
   (widget-insert
@@ -183,15 +185,18 @@
    'url-link
    :tag "Source"
    "https://people.ece.cornell.edu/land/OldStudentProjects/cs490-95to96/HJKIM/emotions.html")
-  (widget-insert "\n\n")
-  (widget-insert "They are also referred to as the ")
+  (widget-insert " They are referred to\n")
+  (widget-insert "as the ")
   (widget-create
    'url-link
    :tag "Ekman Expressions"
    "https://www.paulekman.com/universal-facial-expressions/")
   (widget-insert ".")
   (widget-insert "\n\n")
-  (widget-insert "Use these Unicode characters to precisely communicate your emotion(s).")
+  (widget-insert "All human emotions can be expressed through the combination of\n")
+  (widget-insert "these six emotions.")
+  (widget-insert "\n\n")
+  (widget-insert "Use them to precisely communicate yours.")
   (widget-insert "\n\n")
   (widget-insert "Select the emotion(s) to add them to the kill-ring, \n")
   (widget-insert "optionally including their description(s).\n\n")
