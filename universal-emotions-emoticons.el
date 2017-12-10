@@ -299,7 +299,9 @@
                  (lambda (&rest ignore)
                    (kill-this-buffer))
                  "Kill This Buffer")
-  (use-local-map widget-keymap)
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map widget-keymap)
+    (use-local-map map))
   (widget-setup)
   (progn
     (search-backward universal-emotions-emoticons--joy-char)
