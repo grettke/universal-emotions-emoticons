@@ -34,7 +34,7 @@ Whatever your preference.
 
 Add it to your load path and
 
-`(require `universal-emotions-emoticons)`
+`(require 'universal-emotions-emoticons)`
 
 or
 
