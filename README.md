@@ -28,6 +28,8 @@ their description(s).
 Hit n to go forward, p to go backward, RETURN to select a field,
 and q to quit.
 
+<img src="./screenshot.png" alt="Screenshot" width="62%" height="100%">
+
 ## Installation
 
 Whatever your preference.
